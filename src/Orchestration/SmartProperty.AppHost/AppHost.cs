@@ -25,8 +25,8 @@ var postgres = builder.AddPostgres("postgres")
 
 var db = postgres.AddDatabase("smartpropertydb");
 
-var apiWebApp = builder.AddProject<Projects.SmartProperty_API>("smartfactory-api");
-var aiWebApp = builder.AddProject<Projects.SmartProperty_AI_Web>("smartfactory-ai-web");
+var apiWebApp = builder.AddProject<Projects.SmartProperty_API>("smartproperty-api");
+var aiWebApp = builder.AddProject<Projects.SmartProperty_AI_Web>("smartproperty-ai-web");
 
 apiWebApp
     .WaitWithReference(kafka)
