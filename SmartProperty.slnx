@@ -1,5 +1,9 @@
 <Solution>
   <Folder Name="/src/" />
+  <Folder Name="/src/AI/">
+    <Project Path="src/AI/SmartFactory.AI.Web/SmartFactory.AI.Web.csproj" Id="a0fd491e-69ae-4fa2-a5da-4d881bd1e7da" />
+    <Project Path="src/AI/SmartFactory.AI.Worker/SmartFactory.AI.Worker.csproj" Id="dfc917e1-75f5-47cc-8903-18af4dc7bea1" />
+  </Folder>
   <Folder Name="/src/Client/">
     <Project Path="src/Client/SmartProperty.Components/SmartProperty.Components.csproj" Id="b868c795-e26a-40c7-9b44-1a51ef3a5e97" />
     <Project Path="src/Client/SmartProperty.Services/SmartProperty.Services.csproj" Id="d146396c-8b9d-465e-8923-69f4436610a8" />

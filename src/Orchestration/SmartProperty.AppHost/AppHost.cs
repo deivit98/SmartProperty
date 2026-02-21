@@ -3,13 +3,19 @@ using SmartProperty.AppHost.Extensions;
 var builder = DistributedApplication.CreateBuilder(args);
 
 var ollama = builder.AddOllama("ollama")
-    .WithDataVolume();
+    .WithDataVolume()
+    .WithLifetime(ContainerLifetime.Persistent);
 
 var chat = ollama.AddModel("chat", "llama3.2");
 var embeddings = ollama.AddModel("embeddings", "all-minilm");
 
-var vectorDB = builder.AddQdrant("vectordb")
+var qdrant = builder.AddQdrant("qdrant")
     .WithDataVolume()
+    .WithLifetime(ContainerLifetime.Persistent);
+
+var kafka = builder.AddKafka("kafka")
+    .WithDataVolume(isReadOnly: false)
+    .WithKafkaUI()
     .WithLifetime(ContainerLifetime.Persistent);
 
 var postgres = builder.AddPostgres("postgres")
@@ -19,12 +25,19 @@ var postgres = builder.AddPostgres("postgres")
 
 var db = postgres.AddDatabase("smartpropertydb");
 
-var apiApp = builder.AddProject<Projects.SmartProperty_API>("api");
+var apiWebApp = builder.AddProject<Projects.SmartProperty_API>("smartfactory-api");
+var aiWebApp = builder.AddProject<Projects.SmartFactory_AI_Web>("smartfactory-ai-web");
 
-apiApp
+apiWebApp
+    .WaitWithReference(kafka)
+    .WaitWithReference(postgres, db);
+
+aiWebApp
+    .WaitFor(ollama)
     .WaitWithReference(chat)
     .WaitWithReference(embeddings)
-    .WaitWithReference(vectorDB)
-    .WaitWithReference(postgres, db);
+    .WaitWithReference(qdrant)
+    .WaitWithReference(kafka);
+
 
 builder.Build().Run();
