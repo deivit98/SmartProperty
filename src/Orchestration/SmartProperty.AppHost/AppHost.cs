@@ -10,8 +10,20 @@ var vectorDB = builder.AddQdrant("vectordb")
     .WithDataVolume()
     .WithLifetime(ContainerLifetime.Persistent);
 
+var postregres = builder.AddPostgres("postgres")
+    .WithDataVolume()
+    .WithLifetime(ContainerLifetime.Persistent);
+
 var apiApp = builder.AddProject<Projects.SmartProperty_API>("api");
 
-var clientApp = builder.AddProject<Projects.SmartProperty_UI>("client");
+apiApp
+    .WithReference(chat)
+    .WaitFor(chat)
+    .WithReference(embeddings)
+    .WaitFor(embeddings)
+    .WithReference(vectorDB)
+    .WaitFor(vectorDB)
+    .WithReference(postregres)
+    .WaitFor(postregres);
 
 builder.Build().Run();
