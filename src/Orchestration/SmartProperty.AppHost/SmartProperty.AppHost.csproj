@@ -8,4 +8,14 @@
     <UserSecretsId>52d4a2c3-9d7f-49af-b5ea-82e0d2055a0d</UserSecretsId>
   </PropertyGroup>
 
+  <ItemGroup>
+    <PackageReference Include="Aspire.Hosting.Qdrant" Version="13.1.1" />
+    <PackageReference Include="CommunityToolkit.Aspire.Hosting.Ollama" Version="13.1.1" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\Client\SmartProperty.UI\SmartProperty.UI\SmartProperty.UI.csproj" />
+    <ProjectReference Include="..\..\Server\SmartProperty.API\SmartProperty.API.csproj" />
+  </ItemGroup>
+
 </Project>
