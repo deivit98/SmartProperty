@@ -8,10 +8,13 @@
 
   <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.OpenApi" Version="10.0.3" />
+    <PackageReference Include="Aspire.Npgsql.EntityFrameworkCore.PostgreSQL" Version="13.1.1" />
+    <PackageReference Include="Aspire.Qdrant.Client" Version="13.1.1" />
   </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\..\Orchestration\SmartProperty.ServiceDefaults\SmartProperty.ServiceDefaults.csproj" />
+    <ProjectReference Include="..\SmartProperty.Infrastructure\SmartProperty.Infrastructure.csproj" />
   </ItemGroup>
 
   <ItemGroup>

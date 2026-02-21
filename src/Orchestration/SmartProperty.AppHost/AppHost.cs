@@ -1,3 +1,5 @@
+using SmartProperty.AppHost.Extensions;
+
 var builder = DistributedApplication.CreateBuilder(args);
 
 var ollama = builder.AddOllama("ollama")
@@ -10,20 +12,19 @@ var vectorDB = builder.AddQdrant("vectordb")
     .WithDataVolume()
     .WithLifetime(ContainerLifetime.Persistent);
 
-var postregres = builder.AddPostgres("postgres")
+var postgres = builder.AddPostgres("postgres")
     .WithDataVolume()
-    .WithLifetime(ContainerLifetime.Persistent);
+    .WithLifetime(ContainerLifetime.Persistent)
+    .WithPgAdmin();
+
+var db = postgres.AddDatabase("smartpropertydb");
 
 var apiApp = builder.AddProject<Projects.SmartProperty_API>("api");
 
 apiApp
-    .WithReference(chat)
-    .WaitFor(chat)
-    .WithReference(embeddings)
-    .WaitFor(embeddings)
-    .WithReference(vectorDB)
-    .WaitFor(vectorDB)
-    .WithReference(postregres)
-    .WaitFor(postregres);
+    .WaitWithReference(chat)
+    .WaitWithReference(embeddings)
+    .WaitWithReference(vectorDB)
+    .WaitWithReference(postgres, db);
 
 builder.Build().Run();
