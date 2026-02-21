@@ -4,13 +4,6 @@
     {
         extension(IResourceBuilder<ProjectResource> builder)
         {
-            public IResourceBuilder<ProjectResource> WaitWithReference(IResourceBuilder<OllamaResource> ollama)
-            {
-                return builder
-                    .WithReference(ollama)
-                    .WaitFor(ollama);
-            }
-
             public IResourceBuilder<ProjectResource> WaitWithReference(IResourceBuilder<OllamaModelResource> ollamaModel)
             {
                 return builder
@@ -33,6 +26,13 @@
                      .WaitFor(postgres)
                      .WaitFor(db);
 
+            }
+
+            public IResourceBuilder<ProjectResource> WaitWithReference(IResourceBuilder<KafkaServerResource> kafka)
+            {
+                return builder
+                    .WithReference(kafka)
+                    .WaitFor(kafka);
             }
         }
     }
