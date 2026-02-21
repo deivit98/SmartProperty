@@ -9,6 +9,8 @@ builder.AddServiceDefaults();
 // Add database context
 builder.AddNpgsqlDbContext<ApplicationDbContext>("smartpropertydb");
 
+builder.AddQdrantClient("vectordb");
+
 builder.Services.AddControllers();
 // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
 builder.Services.AddOpenApi();
