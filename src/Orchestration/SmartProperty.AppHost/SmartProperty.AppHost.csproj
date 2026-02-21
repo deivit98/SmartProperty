@@ -16,7 +16,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\AI\SmartFactory.AI.Web\SmartFactory.AI.Web.csproj" />
+    <ProjectReference Include="..\..\AI\SmartFactory.AI.Web\SmartProperty.AI.Web.csproj" />
     <ProjectReference Include="..\..\Server\SmartProperty.API\SmartProperty.API.csproj" />
   </ItemGroup>
 
