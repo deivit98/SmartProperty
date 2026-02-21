@@ -1,15 +1,12 @@
-﻿using SmartProperty.Domain.Entities.Enums;
-using System.ComponentModel.DataAnnotations;
+using SmartProperty.Domain.Entities.Enums;
 
 namespace SmartProperty.Domain.Entities
 {
     public class Property
     {
-        [Key]
         public Guid Id { get; set; }
 
         // Basic Info
-        [Required, MaxLength(200)]
         public string Title { get; set; } = string.Empty;
 
         public string? Description { get; set; }
