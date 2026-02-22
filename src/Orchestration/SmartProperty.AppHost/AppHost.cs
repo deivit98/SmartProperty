@@ -10,7 +10,7 @@ var ollama = builder.AddOllama("ollama")
 var chat = ollama.AddModel("chat", "llama3.2");
 var embeddings = ollama.AddModel("embeddings", "all-minilm");
 
-var qdrant = builder.AddQdrant("qdrant")
+var qdrant = builder.AddQdrant("qdrant-vectorDB")
     .WithDataVolume();
 
 var kafka = builder.AddKafka("kafka")
@@ -23,19 +23,24 @@ var postgres = builder.AddPostgres("postgres")
 
 var db = postgres.AddDatabase("smartpropertydb");
 
+var s3 = builder.AddMinioContainer("s3Storage")
+    .WithDataVolume();
+
 var apiWebApp = builder.AddProject<Projects.SmartProperty_API>("smartproperty-api");
 var aiWebApp = builder.AddProject<Projects.SmartProperty_AI_Web>("smartproperty-ai-web");
 
 apiWebApp
     .WaitWithReference(kafka)
-    .WaitWithReference(postgres, db);
+    .WaitWithReference(postgres, db)
+    .WaitWithReference(s3);
 
 aiWebApp
     .WaitFor(ollama)
     .WaitWithReference(chat)
     .WaitWithReference(embeddings)
     .WaitWithReference(qdrant)
-    .WaitWithReference(kafka);
+    .WaitWithReference(kafka)
+    .WaitWithReference(s3);
 
 
 builder.Build().Run();

@@ -34,6 +34,13 @@
                     .WithReference(kafka)
                     .WaitFor(kafka);
             }
+
+            public IResourceBuilder<ProjectResource> WaitWithReference(IResourceBuilder<MinioContainerResource> minio)
+            {
+                return builder
+                    .WithReference(minio)
+                    .WaitFor(minio);
+            }
         }
     }
 }
