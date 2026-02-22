@@ -6,6 +6,7 @@ var builder = WebApplication.CreateBuilder(args);
 builder.AddServiceDefaults();
 
 builder.AddNpgsqlDbContext<ApplicationDbContext>("smartpropertydb");
+builder.AddMinioClient("s3Storage");
 
 builder.Services.AddControllers();
 
