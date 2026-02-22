@@ -1,7 +1,7 @@
 ﻿using SmartProperty.Application.Features.LocationFeatures.CreateLocation;
 using SmartProperty.Domain.Entities;
 
-namespace SmartProperty.Application.Features.Models
+namespace SmartProperty.Application.Features.LocationFeatures.Models
 {
     public class LocationModel
     {
@@ -31,6 +31,22 @@ namespace SmartProperty.Application.Features.Models
                 Latitude = location.Latitude,
                 Longitude = location.Longitude,
                 Neighborhood = location.Neighborhood
+            };
+        }
+
+        public static LocationModel ToModel(this CreateLocationRequest request)
+        {
+            return new LocationModel
+            {
+                Id = Guid.Empty,
+                Address = request.Address,
+                City = request.City,
+                State = request.State,
+                Country = request.Country,
+                ZipCode = request.ZipCode,
+                Latitude = request.Latitude,
+                Longitude = request.Longitude,
+                Neighborhood = request.Neighborhood
             };
         }
 

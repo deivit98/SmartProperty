@@ -1,6 +1,6 @@
 using MediatR;
 using SmartProperty.Application.Features.LocationFeatures.CreateLocation;
-using SmartProperty.Application.Features.Models;
+using SmartProperty.Application.Features.LocationFeatures.Models;
 using SmartProperty.Infrastructure.Data;
 using SmartProperty.Infrastructure.Data.ExtensionMethods.LocationExtensions.Write;
 using SmartProperty.Result;

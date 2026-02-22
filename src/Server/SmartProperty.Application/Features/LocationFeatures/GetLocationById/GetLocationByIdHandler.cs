@@ -1,5 +1,5 @@
 using MediatR;
-using SmartProperty.Application.Features.Models;
+using SmartProperty.Application.Features.LocationFeatures.Models;
 using SmartProperty.Infrastructure.Data;
 using SmartProperty.Infrastructure.Data.ExtensionMethods.LocationExtensions.Read;
 using SmartProperty.Result;

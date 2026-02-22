@@ -1,4 +1,4 @@
-using SmartProperty.Application.Features.Models;
+using SmartProperty.Application.Features.LocationFeatures.Models;
 
 namespace SmartProperty.Application.Features.LocationFeatures.UpdateLocation;
 
