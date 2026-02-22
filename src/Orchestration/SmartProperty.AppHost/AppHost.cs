@@ -4,23 +4,21 @@ var builder = DistributedApplication.CreateBuilder(args);
 
 var ollama = builder.AddOllama("ollama")
     .WithDataVolume()
-    .WithLifetime(ContainerLifetime.Persistent);
+    .WithGPUSupport()
+    .WithOpenWebUI();
 
 var chat = ollama.AddModel("chat", "llama3.2");
 var embeddings = ollama.AddModel("embeddings", "all-minilm");
 
 var qdrant = builder.AddQdrant("qdrant")
-    .WithDataVolume()
-    .WithLifetime(ContainerLifetime.Persistent);
+    .WithDataVolume();
 
 var kafka = builder.AddKafka("kafka")
     .WithDataVolume(isReadOnly: false)
-    .WithKafkaUI()
-    .WithLifetime(ContainerLifetime.Persistent);
+    .WithKafkaUI();
 
 var postgres = builder.AddPostgres("postgres")
     .WithDataVolume()
-    .WithLifetime(ContainerLifetime.Persistent)
     .WithPgAdmin();
 
 var db = postgres.AddDatabase("smartpropertydb");
