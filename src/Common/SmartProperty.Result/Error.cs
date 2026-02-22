@@ -1,4 +1,4 @@
-namespace SmartProperty.ResultPattern;
+namespace SmartProperty.Result;
 
 /// <summary>
 /// Canonical error type with code and message, used as TError in Result&lt;TValue, Error&gt; and Result&lt;TValue&gt;.

@@ -1,3 +1,4 @@
+using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
 namespace SmartProperty.Result;
@@ -17,6 +18,21 @@ public static class ResultActionResultExtensions
 
         if (result.IsSuccess)
             return controller.Ok(result.Value);
+
+        var (statusCode, body) = ToStatusAndBody(result.Error);
+        return controller.StatusCode(statusCode, body);
+    }
+
+    /// <summary>
+    /// Maps a result with no value to an action result. Success returns 204 No Content; failure returns an appropriate status and body from <see cref="Error.Code"/> and message.
+    /// </summary>
+    public static IActionResult ToActionResult(this Result<Unit> result, ControllerBase controller)
+    {
+        if (controller == null)
+            throw new ArgumentNullException(nameof(controller));
+
+        if (result.IsSuccess)
+            return controller.NoContent();
 
         var (statusCode, body) = ToStatusAndBody(result.Error);
         return controller.StatusCode(statusCode, body);

@@ -57,7 +57,8 @@
 
 
   <ItemGroup>
-    <PackageReference Include="Microsoft.AspNetCore.OpenApi" Version="10.0.3" />
+    <PackageReference Include="MediatR" Version="12.5.0" />
+    <PackageReference Include="Swashbuckle.AspNetCore" Version="7.2.0" />
     <PackageReference Include="Aspire.Npgsql.EntityFrameworkCore.PostgreSQL" Version="13.1.1" />
     <PackageReference Include="Aspire.Qdrant.Client" Version="13.1.1" />
     <PackageReference Include="CommunityToolkit.Aspire.Minio.Client" Version="13.1.1" />
@@ -69,6 +70,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\Orchestration\SmartProperty.ServiceDefaults\SmartProperty.ServiceDefaults.csproj" />
+    <ProjectReference Include="..\SmartProperty.Application\SmartProperty.Application.csproj" />
     <ProjectReference Include="..\SmartProperty.Infrastructure\SmartProperty.Infrastructure.csproj" />
   </ItemGroup>
 

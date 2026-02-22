@@ -1,4 +1,4 @@
-namespace SmartProperty.ResultPattern;
+namespace SmartProperty.Result;
 
 /// <summary>
 /// Domain-agnostic error codes for Result failures.
