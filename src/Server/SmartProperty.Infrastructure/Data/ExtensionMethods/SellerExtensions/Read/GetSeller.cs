@@ -6,21 +6,21 @@ namespace SmartProperty.Infrastructure.Data.ExtensionMethods.SellerExtensions.Re
 {
     public static class GetSeller
     {
-        public static Task<Seller?> GetSellerByIdAsync(this ApplicationDbContext db,Guid sellerId,CancellationToken ct = default)
+        public static Task<Seller?> GetSellerByIdAsync(this ApplicationDbContext db, Guid sellerId, CancellationToken ct = default)
         {
             return db.Sellers
                      .AsNoTracking()
                      .FirstOrDefaultAsync(s => s.Id == sellerId, ct);
         }
 
-        public static Task<Seller?> GetSellerByEmailAsync(this ApplicationDbContext db,string email,CancellationToken ct = default)
+        public static Task<Seller?> GetSellerByEmailAsync(this ApplicationDbContext db, string email, CancellationToken ct = default)
         {
             return db.Sellers
                      .AsNoTracking()
                      .FirstOrDefaultAsync(s => s.Email == email, ct);
         }
 
-        public static Task<List<Seller>> GetSellersByTypeAsync(this ApplicationDbContext db,SellerType type,CancellationToken ct = default)
+        public static Task<List<Seller>> GetSellersByTypeAsync(this ApplicationDbContext db, SellerType type, CancellationToken ct = default)
         {
             return db.Sellers
                      .AsNoTracking()
@@ -28,7 +28,7 @@ namespace SmartProperty.Infrastructure.Data.ExtensionMethods.SellerExtensions.Re
                      .ToListAsync(ct);
         }
 
-        public static Task<Seller?> GetSellerWithPropertiesAsync(this ApplicationDbContext db,Guid sellerId,CancellationToken ct = default)
+        public static Task<Seller?> GetSellerWithPropertiesAsync(this ApplicationDbContext db, Guid sellerId, CancellationToken ct = default)
         {
             return db.Sellers
                      .Include(s => s.Properties)
