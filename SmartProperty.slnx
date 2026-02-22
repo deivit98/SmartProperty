@@ -9,6 +9,9 @@
     <Project Path="src/Client/SmartProperty.Services/SmartProperty.Services.csproj" Id="d146396c-8b9d-465e-8923-69f4436610a8" />
     <Project Path="src/Client/SmartProperty.UI/SmartProperty.UI.csproj" Id="da269f81-dfcd-470e-91ca-b6f5fc2b696f" />
   </Folder>
+  <Folder Name="/src/Common/">
+    <Project Path="src/Common/SmartProperty.Result/SmartProperty.Result.csproj" Id="267d1a11-92a1-49c3-81b7-8fa5bef14072" />
+  </Folder>
   <Folder Name="/src/Orchestration/">
     <Project Path="src/Orchestration/SmartProperty.AppHost/SmartProperty.AppHost.csproj" Id="3f53531e-903f-4876-877f-9bf2409425a2" />
     <Project Path="src/Orchestration/SmartProperty.ServiceDefaults/SmartProperty.ServiceDefaults.csproj" Id="59baacb0-d5b2-42ee-97f5-3dbccf46fe73" />
