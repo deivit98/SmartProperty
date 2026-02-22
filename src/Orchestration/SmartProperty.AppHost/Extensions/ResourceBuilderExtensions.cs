@@ -4,6 +4,13 @@
     {
         extension(IResourceBuilder<ProjectResource> builder)
         {
+            public IResourceBuilder<ProjectResource> WaitWithReference(IResourceBuilder<ProjectResource> project)
+            {
+                return builder
+                    .WithReference(project)
+                    .WaitFor(project);
+            }
+
             public IResourceBuilder<ProjectResource> WaitWithReference(IResourceBuilder<OllamaModelResource> ollamaModel)
             {
                 return builder

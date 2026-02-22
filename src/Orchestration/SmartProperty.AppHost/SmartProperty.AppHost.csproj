@@ -18,6 +18,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\AI\SmartProperty.AI.Web\SmartProperty.AI.Web.csproj" />
+    <ProjectReference Include="..\..\Client\SmartProperty.UI\SmartProperty.UI.csproj" />
     <ProjectReference Include="..\..\Server\SmartProperty.API\SmartProperty.API.csproj" />
   </ItemGroup>
 

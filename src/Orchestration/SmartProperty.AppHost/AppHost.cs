@@ -28,6 +28,7 @@ var s3 = builder.AddMinioContainer("s3Storage")
 
 var apiWebApp = builder.AddProject<Projects.SmartProperty_API>("smartproperty-api");
 var aiWebApp = builder.AddProject<Projects.SmartProperty_AI_Web>("smartproperty-ai-web");
+var uiWebApp = builder.AddProject<Projects.SmartProperty_UI>("smartproperty-ui-web");
 
 apiWebApp
     .WaitWithReference(kafka)
@@ -41,6 +42,13 @@ aiWebApp
     .WaitWithReference(qdrant)
     .WaitWithReference(kafka)
     .WaitWithReference(s3);
+
+uiWebApp
+     .WaitWithReference(apiWebApp)
+     .WaitWithReference(aiWebApp);
+
+
+builder.AddProject<Projects.SmartProperty_UI>("smartproperty-ui");
 
 
 builder.Build().Run();
