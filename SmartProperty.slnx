@@ -10,6 +10,7 @@
     <Project Path="src/Client/SmartProperty.UI/SmartProperty.UI.csproj" Id="da269f81-dfcd-470e-91ca-b6f5fc2b696f" />
   </Folder>
   <Folder Name="/src/Common/">
+    <Project Path="src/Common/SmartProperty.Kafka/SmartProperty.Kafka.csproj" Id="5737cfdb-522e-4696-ac80-8d0690d7c4e5" />
     <Project Path="src/Common/SmartProperty.Result/SmartProperty.Result.csproj" Id="267d1a11-92a1-49c3-81b7-8fa5bef14072" />
   </Folder>
   <Folder Name="/src/Orchestration/">
