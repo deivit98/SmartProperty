@@ -1,6 +1,12 @@
+using SmartProperty.AI.Worker.Consumers;
+using SmartProperty.Kafka;
+
 var builder = WebApplication.CreateBuilder(args);
 
 builder.AddServiceDefaults();
+
+builder.AddSmartPropertyKafkaConsumer<PropertyCreatedMessage>("kafka", "smartproperty-ai");
+builder.Services.AddHostedService<PropertyCreatedConsumer>();
 
 builder.Services.AddControllers();
 builder.Services.AddOpenApi();

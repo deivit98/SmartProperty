@@ -11,7 +11,9 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\..\Common\SmartProperty.Kafka\SmartProperty.Kafka.csproj" />
     <ProjectReference Include="..\..\Orchestration\SmartProperty.ServiceDefaults\SmartProperty.ServiceDefaults.csproj" />
+    <ProjectReference Include="..\SmartProperty.AI.Worker\SmartProperty.AI.Worker.csproj" />
   </ItemGroup>
 
 </Project>
