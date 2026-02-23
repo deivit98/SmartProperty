@@ -1,6 +1,8 @@
 using Confluent.Kafka;
+using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
+using SmartProperty.AI.Worker.Services;
 using SmartProperty.Kafka;
 
 namespace SmartProperty.AI.Worker.Consumers;
@@ -10,9 +12,11 @@ namespace SmartProperty.AI.Worker.Consumers;
 /// </summary>
 public sealed class PropertyCreatedConsumer(
     IConsumer<MessageKey, PropertyCreatedMessage> consumer,
+    IServiceScopeFactory scopeFactory,
     ILogger<PropertyCreatedConsumer> logger) : BackgroundService
 {
     private readonly IConsumer<MessageKey, PropertyCreatedMessage> _consumer = consumer;
+    private readonly IServiceScopeFactory _scopeFactory = scopeFactory;
     private readonly ILogger<PropertyCreatedConsumer> _logger = logger;
 
     protected override async Task ExecuteAsync(CancellationToken stoppingToken)
@@ -47,7 +51,7 @@ public sealed class PropertyCreatedConsumer(
         await Task.CompletedTask;
     }
 
-    private Task ProcessAsync(PropertyCreatedMessage message, CancellationToken cancellationToken)
+    private async Task ProcessAsync(PropertyCreatedMessage message, CancellationToken cancellationToken)
     {
         _logger.LogInformation(
             "Property created: Id={PropertyId}, Title={Title}, CreatedAt={CreatedAt}",
@@ -55,7 +59,8 @@ public sealed class PropertyCreatedConsumer(
             message.Title,
             message.CreatedAt);
 
-        // TODO: e.g. trigger embeddings, index in Qdrant, etc.
-        return Task.CompletedTask;
+        await using var scope = _scopeFactory.CreateAsyncScope();
+        var vectorizationService = scope.ServiceProvider.GetRequiredService<IPropertyVectorizationService>();
+        await vectorizationService.VectorizeAndStoreAsync(message, cancellationToken);
     }
 }
