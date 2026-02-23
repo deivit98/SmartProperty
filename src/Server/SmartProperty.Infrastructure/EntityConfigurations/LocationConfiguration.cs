@@ -10,25 +10,27 @@ public class LocationConfiguration : IEntityTypeConfiguration<Location>
     {
         builder.HasKey(e => e.Id);
 
+        builder.Property(e => e.Id)
+            .ValueGeneratedOnAdd();
+
         builder.Property(e => e.Address)
             .IsRequired()
-            .HasMaxLength(300);
+            .HasMaxLength(50);
 
         builder.Property(e => e.City)
             .IsRequired()
-            .HasMaxLength(100);
+            .HasMaxLength(50);
 
         builder.Property(e => e.State)
-            .HasMaxLength(100);
+            .HasMaxLength(50);
 
         builder.Property(e => e.Country)
             .IsRequired()
-            .HasMaxLength(100);
+            .HasMaxLength(50);
 
-        builder.Property(e => e.ZipCode)
-            .HasMaxLength(20);
-
-        builder.Property(e => e.Neighborhood)
-            .HasMaxLength(200);
+        builder.HasMany(e => e.Properties)
+            .WithOne(p => p.Location)
+            .HasForeignKey(p => p.LocationId)
+            .OnDelete(DeleteBehavior.SetNull);
     }
 }

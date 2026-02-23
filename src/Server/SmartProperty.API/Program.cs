@@ -3,17 +3,30 @@ using Microsoft.OpenApi;
 using SmartProperty.Application.Producers;
 using SmartProperty.Infrastructure.Data;
 using SmartProperty.Kafka;
+using System.Text.Json.Serialization;
 
 var builder = WebApplication.CreateBuilder(args);
 
 builder.AddServiceDefaults();
 
-builder.AddNpgsqlDbContext<ApplicationDbContext>("smartpropertydb");
+       
 builder.AddMinioClient("s3Storage");
 builder.AddSmartPropertyKafkaProducer<PropertyCreatedMessage>();
 builder.Services.AddSingleton<IPropertyProducer, PropertyProducer>();
+builder.Services.AddSingleton<AuditTimestampInterceptor>();
 
-builder.Services.AddControllers();
+builder.Services.AddDbContext<ApplicationDbContext>((sp, options) =>
+{
+    options.AddInterceptors(sp.GetRequiredService<AuditTimestampInterceptor>());
+    options.UseNpgsql(builder.Configuration.GetConnectionString("smartpropertydb"));
+});
+
+builder.Services.AddControllers()
+    .AddJsonOptions(options =>
+    {
+        options.JsonSerializerOptions.Converters.Add(new JsonStringEnumConverter());
+    });
+
 builder.Services.AddMediatR(cfg => cfg.RegisterServicesFromAssembly(typeof(SmartProperty.Application.ApplicationAssembly).Assembly));
 
 builder.Services.AddEndpointsApiExplorer();
@@ -40,6 +53,7 @@ if (app.Environment.IsDevelopment())
 
     using var scope = app.Services.CreateScope();
     var db = scope.ServiceProvider.GetRequiredService<ApplicationDbContext>();
+    //await db.Database.EnsureDeletedAsync();
     db.Database.Migrate();
 }
 

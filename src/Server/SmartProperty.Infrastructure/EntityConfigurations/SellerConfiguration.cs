@@ -10,14 +10,27 @@ public class SellerConfiguration : IEntityTypeConfiguration<Seller>
     {
         builder.HasKey(e => e.Id);
 
+        builder.Property(e => e.Id)
+            .ValueGeneratedOnAdd();
+
         builder.Property(e => e.Name)
             .IsRequired()
-            .HasMaxLength(150);
+            .HasMaxLength(40);
 
         builder.Property(e => e.Email)
-            .HasMaxLength(150);
+            .IsRequired()
+            .HasMaxLength(40);
 
         builder.Property(e => e.PhoneNumber)
             .HasMaxLength(20);
+
+        builder.Property(e => e.Type)
+            .IsRequired()
+            .HasConversion<string>();
+
+        builder.HasMany(e => e.Properties)
+            .WithOne(p => p.Seller)
+            .HasForeignKey(p => p.SellerId)
+            .OnDelete(DeleteBehavior.SetNull);
     }
 }

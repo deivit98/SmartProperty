@@ -1,17 +1,19 @@
 using SmartProperty.Domain.Entities.Enums;
+using System.Text.Json.Serialization;
 
 namespace SmartProperty.Domain.Entities
 {
-    public class Property
+    public class Property : BaseEntity
     {
-        public Guid Id { get; set; }
-
         // Basic Info
         public string Title { get; set; } = string.Empty;
 
         public string? Description { get; set; }
 
+        [JsonConverter(typeof(JsonStringEnumConverter))]
         public PropertyType Type { get; set; }
+
+        [JsonConverter(typeof(JsonStringEnumConverter))]
         public PropertyStatus Status { get; set; }
 
         // Physical Characteristics
@@ -29,10 +31,6 @@ namespace SmartProperty.Domain.Entities
         public string Currency { get; set; } = "EUR";
         public decimal? RentPrice { get; set; }
         public decimal? Deposit { get; set; }
-
-        public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
-        public DateTime UpdatedAt { get; set; } = DateTime.UtcNow;
-
 
         public Guid? LocationId { get; set; }
         public Location? Location { get; set; }

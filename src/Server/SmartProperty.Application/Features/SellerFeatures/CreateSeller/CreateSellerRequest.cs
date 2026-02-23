@@ -10,6 +10,6 @@ namespace SmartProperty.Application.Features.SellerFeatures.CreateSeller;
 public record CreateSellerRequest(
     string Name,
     SellerType Type,
-    string? Email = null,
+    string Email,
     string? PhoneNumber = null
 ) : IRequest<Result<CreateSellerResponse>>;

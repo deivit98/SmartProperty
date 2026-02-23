@@ -26,11 +26,7 @@ namespace SmartProperty.Application.Features.LocationFeatures.Models
                 Address = location.Address,
                 City = location.City,
                 State = location.State,
-                Country = location.Country,
-                ZipCode = location.ZipCode,
-                Latitude = location.Latitude,
-                Longitude = location.Longitude,
-                Neighborhood = location.Neighborhood
+                Country = location.Country
             };
         }
 
@@ -58,11 +54,7 @@ namespace SmartProperty.Application.Features.LocationFeatures.Models
                 Address = request.Address,
                 City = request.City,
                 State = request.State,
-                Country = request.Country,
-                ZipCode = request.ZipCode,
-                Latitude = request.Latitude,
-                Longitude = request.Longitude,
-                Neighborhood = request.Neighborhood
+                Country = request.Country
             };
         }
 
@@ -72,10 +64,6 @@ namespace SmartProperty.Application.Features.LocationFeatures.Models
             location.City = request.City;
             location.State = request.State;
             location.Country = request.Country;
-            location.ZipCode = request.ZipCode;
-            location.Latitude = request.Latitude;
-            location.Longitude = request.Longitude;
-            location.Neighborhood = request.Neighborhood;
         }
     }
 }

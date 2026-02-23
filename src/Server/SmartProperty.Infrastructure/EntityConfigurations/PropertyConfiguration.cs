@@ -1,6 +1,7 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using SmartProperty.Domain.Entities;
+using System.ComponentModel;
 
 namespace SmartProperty.Infrastructure.EntityConfigurations;
 
@@ -10,9 +11,21 @@ public class PropertyConfiguration : IEntityTypeConfiguration<Property>
     {
         builder.HasKey(e => e.Id);
 
+        builder.Property(e => e.Id)
+            .ValueGeneratedOnAdd();
+
         builder.Property(e => e.Title)
             .IsRequired()
-            .HasMaxLength(200);
+            .HasMaxLength(50);
+
+        builder.Property(e => e.Description)
+            .HasMaxLength(500);
+
+        builder.Property(e => e.Type)
+            .HasConversion<string>();
+
+        builder.Property(e => e.Status)
+            .HasConversion<string>();
 
         builder.Property(e => e.Currency)
             .HasMaxLength(10);

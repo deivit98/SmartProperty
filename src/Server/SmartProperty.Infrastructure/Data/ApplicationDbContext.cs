@@ -1,5 +1,6 @@
 using Microsoft.EntityFrameworkCore;
 using SmartProperty.Domain.Entities;
+using SmartProperty.Infrastructure.EntityConfigurations;
 
 namespace SmartProperty.Infrastructure.Data;
 
@@ -12,6 +13,7 @@ public class ApplicationDbContext(DbContextOptions<ApplicationDbContext> options
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         base.OnModelCreating(modelBuilder);
+        modelBuilder.Ignore<BaseEntity>();
         modelBuilder.ApplyConfigurationsFromAssembly(typeof(ApplicationDbContext).Assembly);
     }
 }

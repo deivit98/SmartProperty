@@ -1,16 +1,16 @@
 using SmartProperty.Domain.Entities.Enums;
+using System.Text.Json.Serialization;
 
 namespace SmartProperty.Domain.Entities
 {
-    public class Seller
+    public class Seller : BaseEntity
     {
-        public Guid Id { get; set; }
-
         public string Name { get; set; } = string.Empty;
 
+        [JsonConverter(typeof(JsonStringEnumConverter))]
         public SellerType Type { get; set; }
 
-        public string? Email { get; set; }
+        public string Email { get; set; } = string.Empty;
 
         public string? PhoneNumber { get; set; }
 
