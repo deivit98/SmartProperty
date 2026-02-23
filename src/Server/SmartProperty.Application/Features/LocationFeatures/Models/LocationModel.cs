@@ -34,7 +34,7 @@ namespace SmartProperty.Application.Features.LocationFeatures.Models
             };
         }
 
-        public static LocationModel ToModel(this CreateLocationRequest request)
+        public static LocationModel ToLocationModel(this CreateLocationRequest request)
         {
             return new LocationModel
             {

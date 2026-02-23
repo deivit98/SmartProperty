@@ -1,5 +1,4 @@
 using MediatR;
-using SmartProperty.Application.Features.LocationFeatures.CreateLocation;
 using SmartProperty.Application.Features.LocationFeatures.Models;
 using SmartProperty.Infrastructure.Data;
 using SmartProperty.Infrastructure.Data.ExtensionMethods.LocationExtensions.Write;
@@ -17,7 +16,7 @@ public class UpdateLocationHandler(ApplicationDbContext dbContext) : IRequestHan
         if (location is null)
             return Result<UpdateLocationResponse>.Fail(ErrorCode.NotFound, "Location not found.");
 
-        request.Body.ToModel().ApplyTo(location);
+        request.Body.ToLocationModel().ApplyTo(location);
         await _dbContext.SaveChangesAsync(cancellationToken);
 
         return Result<UpdateLocationResponse>.Ok(new UpdateLocationResponse(location.ToModel()));

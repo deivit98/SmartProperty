@@ -19,7 +19,7 @@ public class CreateLocationHandler(ApplicationDbContext dbContext) : IRequestHan
         if (string.IsNullOrWhiteSpace(request.Country))
             return Result<CreateLocationResponse>.Fail(ErrorCode.EmptyParameter, "Country is required.");
 
-        var location = request.ToModel().ToEntity(Guid.NewGuid());
+        var location = request.ToLocationModel().ToEntity(Guid.NewGuid());
         await _dbContext.AddLocationAsync(location, cancellationToken);
         await _dbContext.SaveChangesAsync(cancellationToken);
 

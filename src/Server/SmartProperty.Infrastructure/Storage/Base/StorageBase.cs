@@ -6,21 +6,18 @@ namespace SmartProperty.Infrastructure.Storage.Base;
 
 public abstract class StorageBase(IMinioClient client, string bucketName) : IStorageBase
 {
-    private readonly IMinioClient _client = client;
-    private readonly string _bucketName = bucketName;
-
-    protected string BucketName => _bucketName;
+    protected string BucketName => bucketName;
 
     public virtual async Task EnsureBucketExistsAsync(CancellationToken cancellationToken = default)
     {
-        var exists = await _client.BucketExistsAsync(
-            new BucketExistsArgs().WithBucket(_bucketName),
+        var exists = await client.BucketExistsAsync(
+            new BucketExistsArgs().WithBucket(BucketName),
             cancellationToken).ConfigureAwait(false);
 
         if (!exists)
         {
-            await _client.MakeBucketAsync(
-                new MakeBucketArgs().WithBucket(_bucketName),
+            await client.MakeBucketAsync(
+                new MakeBucketArgs().WithBucket(BucketName),
                 cancellationToken).ConfigureAwait(false);
         }
     }
@@ -33,7 +30,7 @@ public abstract class StorageBase(IMinioClient client, string bucketName) : ISto
         CancellationToken cancellationToken = default)
     {
         var args = new PutObjectArgs()
-            .WithBucket(_bucketName)
+            .WithBucket(BucketName)
             .WithObject(objectKey)
             .WithStreamData(data)
             .WithObjectSize(size);
@@ -41,7 +38,7 @@ public abstract class StorageBase(IMinioClient client, string bucketName) : ISto
         if (!string.IsNullOrEmpty(contentType))
             args = args.WithContentType(contentType);
 
-        await _client.PutObjectAsync(args, cancellationToken).ConfigureAwait(false);
+        await client.PutObjectAsync(args, cancellationToken).ConfigureAwait(false);
     }
 
     public virtual async Task GetObjectAsync(
@@ -49,9 +46,9 @@ public abstract class StorageBase(IMinioClient client, string bucketName) : ISto
         Stream destination,
         CancellationToken cancellationToken = default)
     {
-        await _client.GetObjectAsync(
+        await client.GetObjectAsync(
             new GetObjectArgs()
-                .WithBucket(_bucketName)
+                .WithBucket(BucketName)
                 .WithObject(objectKey)
                 .WithCallbackStream(async (stream, ct) => await stream.CopyToAsync(destination, ct).ConfigureAwait(false)),
             cancellationToken).ConfigureAwait(false);
@@ -61,8 +58,8 @@ public abstract class StorageBase(IMinioClient client, string bucketName) : ISto
         string objectKey,
         CancellationToken cancellationToken = default)
     {
-        await _client.RemoveObjectAsync(
-            new RemoveObjectArgs().WithBucket(_bucketName).WithObject(objectKey),
+        await client.RemoveObjectAsync(
+            new RemoveObjectArgs().WithBucket(BucketName).WithObject(objectKey),
             cancellationToken).ConfigureAwait(false);
     }
 
@@ -72,13 +69,13 @@ public abstract class StorageBase(IMinioClient client, string bucketName) : ISto
         CancellationToken cancellationToken = default)
     {
         var args = new ListObjectsArgs()
-            .WithBucket(_bucketName)
+            .WithBucket(BucketName)
             .WithRecursive(recursive);
 
         if (!string.IsNullOrEmpty(prefix))
             args = args.WithPrefix(prefix);
 
-        return _client.ListObjectsEnumAsync(args, cancellationToken);
+        return client.ListObjectsEnumAsync(args, cancellationToken);
     }
 
     public virtual async Task<bool> ObjectExistsAsync(
@@ -87,8 +84,8 @@ public abstract class StorageBase(IMinioClient client, string bucketName) : ISto
     {
         try
         {
-            await _client.StatObjectAsync(
-                new StatObjectArgs().WithBucket(_bucketName).WithObject(objectKey),
+            await client.StatObjectAsync(
+                new StatObjectArgs().WithBucket(BucketName).WithObject(objectKey),
                 cancellationToken).ConfigureAwait(false);
             return true;
         }
